@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import Nav from './Nav';
 
 const Logo = styled.h1`
-  background: red;
   font-size: 4rem;
   margin-left: 2rem;
+  position: relative;
   z-index: 2;
+  background: red;
   transform: skew(-7deg);
-
   a {
     color: white;
     text-decoration: none;
@@ -23,28 +23,28 @@ const HeaderStyles = styled.header`
     display: grid;
     grid-template-columns: auto 1fr;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
   }
 
   .sub-bar {
     display: grid;
     grid-template-columns: 1fr auto;
-    border-bottom: 10px solid var(--black, black);
+    border-bottom: 1px solid var(--black, black);
   }
 `;
 
-const Header = () => (
-  <HeaderStyles>
-    <div className="bar">
-      <Logo>
-        <Link href="/">Sick Fits</Link>
-      </Logo>
-    </div>
-    <div className="sub-bar">
-      <p>Search</p>
-    </div>
-    <Nav />
-  </HeaderStyles>
-);
-
-export default Header;
+export default function Header() {
+  return (
+    <HeaderStyles>
+      <div className="bar">
+        <Logo>
+          <Link href="/">Sick fits</Link>
+        </Logo>
+        <Nav />
+      </div>
+      <div className="sub-bar">
+        <p>Search</p>
+      </div>
+    </HeaderStyles>
+  );
+}
