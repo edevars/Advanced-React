@@ -1,11 +1,14 @@
-import { User } from "./schemas/User";
+import { ProductImage } from "./schemas/ProductImage";
 import { createAuth } from "@keystone-next/auth";
-import "dotenv/config";
 import { createSchema, config } from "@keystone-next/keystone/schema";
 import {
   withItemData,
   statelessSessions,
 } from "@keystone-next/keystone/session";
+
+import { Product } from "./schemas/Product";
+import { User } from "./schemas/User";
+import "dotenv/config";
 
 const databseURL = process.env.DATABASE_URL;
 
@@ -38,11 +41,12 @@ export default withAuth(
     lists: createSchema({
       // Schema items
       User,
+      Product,
+      ProductImage,
     }),
     ui: {
       // Show the UI only for people who pass this test
       isAccessAllowed: ({ session }) => {
-        console.log(session);
         return session?.data;
       },
     },
