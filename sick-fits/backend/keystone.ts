@@ -1,14 +1,14 @@
-import { ProductImage } from "./schemas/ProductImage";
-import { createAuth } from "@keystone-next/auth";
-import { createSchema, config } from "@keystone-next/keystone/schema";
+import { createAuth } from '@keystone-next/auth';
+import { createSchema, config } from '@keystone-next/keystone/schema';
 import {
   withItemData,
   statelessSessions,
-} from "@keystone-next/keystone/session";
+} from '@keystone-next/keystone/session';
+import { ProductImage } from './schemas/ProductImage';
 
-import { Product } from "./schemas/Product";
-import { User } from "./schemas/User";
-import "dotenv/config";
+import { Product } from './schemas/Product';
+import { User } from './schemas/User';
+import 'dotenv/config';
 
 const databseURL = process.env.DATABASE_URL;
 
@@ -18,11 +18,11 @@ const sessionConfig = {
 };
 
 const { withAuth } = createAuth({
-  listKey: "User",
-  identityField: "email",
-  secretField: "password",
+  listKey: 'User',
+  identityField: 'email',
+  secretField: 'password',
   initFirstItem: {
-    fields: ["name", "email", "password"],
+    fields: ['name', 'email', 'password'],
   },
 });
 
@@ -35,8 +35,11 @@ export default withAuth(
       },
     },
     db: {
-      adapter: "mongoose",
+      adapter: 'mongoose',
       url: databseURL,
+      async onConnect(keystone) {
+        console.log('Connected to database', keystone);
+      },
     },
     lists: createSchema({
       // Schema items
@@ -46,12 +49,10 @@ export default withAuth(
     }),
     ui: {
       // Show the UI only for people who pass this test
-      isAccessAllowed: ({ session }) => {
-        return session?.data;
-      },
+      isAccessAllowed: ({ session }) => session?.data,
     },
     session: withItemData(statelessSessions(sessionConfig), {
-      User: "id",
+      User: 'id',
     }),
   })
 );
