@@ -6,7 +6,7 @@ const useForm = (initial = {}) => {
   const handleChange = (event) => {
     let { value, name, type } = event.target;
     if (type === 'number') value = parseInt(value);
-    if (type === 'file') value[0] = event.target.files;
+    if (type === 'file') [value] = event.target.files;
     setInputs({
       ...inputs,
       [name]: value,
